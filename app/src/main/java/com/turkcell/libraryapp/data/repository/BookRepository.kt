@@ -20,4 +20,37 @@ public class BookRepository {
     suspend fun addBook(book: Book): Result<Unit> = runCatching {
         supabase.postgrest["books"].insert(book)
     }
+
+    suspend fun updateBook(book: Book): Result<Unit> = runCatching {
+        supabase.postgrest["books"]
+            .update(book){
+                filter{
+                    eq("id",book.id)
+                }
+            }
+    }
+
+    suspend fun deleteBook(id: String): Result<Unit> = runCatching {
+        supabase.postgrest["books"]
+            .delete{
+                filter{
+                    eq("id",id)
+                }
+            }
+    }
+
+    //bu fonksiyonlar ağ (network) isteği yapıyor ve Kotlin’de böyle işlemler ana thread’i bloklamadan çalıştırılmalı
+    suspend fun searchBooks(query: String): Result<List<Book>> =runCatching {
+        supabase.postgrest["books"]
+            .select {
+                filter{
+                    or{
+                        ilike("title","%$query%")
+                        ilike("author","%$query%")
+                    }
+
+                }
+            }
+            .decodeList<Book>()
+    }
 }

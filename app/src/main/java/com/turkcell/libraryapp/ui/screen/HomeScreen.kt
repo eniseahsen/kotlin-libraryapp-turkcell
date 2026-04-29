@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.turkcell.libraryapp.ui.components.BookCard
 import com.turkcell.libraryapp.ui.viewmodel.AuthViewModel
 import com.turkcell.libraryapp.ui.viewmodel.BookViewModel
 
@@ -38,7 +39,8 @@ fun HomeScreen(authViewModel: AuthViewModel,
                 contentPadding = PaddingValues(32.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 items(books, key = {it.id}){
-                    book -> Text(book.title)
+                    book ->
+                    BookCard(book = book)
                 }
             }
         }
