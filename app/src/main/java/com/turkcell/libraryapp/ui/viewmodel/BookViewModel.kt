@@ -38,4 +38,41 @@ class BookViewModel: ViewModel() {
         }
     }
 
+    fun deleteBook(id: String){
+        println("DELETE ID = $id")
+
+        viewModelScope.launch {
+            repository.deleteBook(id)
+                .onSuccess {
+                    _books.value = _books.value.filter { it.id != id }
+
+                }
+                .onFailure {
+                    println("DELETE ERROR = ${it.message}")
+                    _error.value = it.message
+                }
+        }
+    }
+
+    fun updateBook(book: Book){
+        viewModelScope.launch {
+            repository.updateBook(book)
+                .onSuccess { loadBooks() }
+                .onFailure {
+                    _error.value = it.message
+                }
+        }
+
+    }
+
+    fun searchBooks(query: String){
+        viewModelScope.launch {
+            repository.searchBooks(query)
+                .onSuccess {
+                    _books.value = it
+                }
+                .onFailure { _error.value = it.message }
+        }
+    }
+
 }

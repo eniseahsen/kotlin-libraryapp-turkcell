@@ -34,13 +34,24 @@ fun HomeScreen(authViewModel: AuthViewModel,
             isLoading -> CircularProgressIndicator(modifier = Modifier.size(20.dp),
                 strokeWidth = 2.dp,
                 color = MaterialTheme.colorScheme.onPrimary)
-            books.isEmpty() -> Text("Kitaplar yüklenemedi.")
+            books.isEmpty() -> Text("Henüz kitap yok.")
             else -> LazyColumn(modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(32.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 items(books, key = {it.id}){
                     book ->
-                    BookCard(book = book)
+                    BookCard(book = book,
+                        modifier = Modifier.fillMaxWidth(),
+
+                        onDeleteClick = {
+                            bookViewModel.deleteBook(book.id)
+
+                        },
+
+                        onEditClick = {
+                            bookViewModel.updateBook(it)
+                        }
+                        )
                 }
             }
         }
