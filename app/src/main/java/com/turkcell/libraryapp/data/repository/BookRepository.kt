@@ -25,7 +25,7 @@ public class BookRepository {
         supabase.postgrest["books"]
             .update(book){
                 filter{
-                    eq("id",book.id)
+                    eq("id",book.id ?:"")
                 }
             }
     }

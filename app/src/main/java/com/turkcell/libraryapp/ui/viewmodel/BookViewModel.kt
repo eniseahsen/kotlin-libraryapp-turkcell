@@ -75,4 +75,18 @@ class BookViewModel: ViewModel() {
         }
     }
 
+    fun addBook(book: Book){
+        viewModelScope.launch {
+            repository.addBook(book)
+                .onSuccess {
+                    _books.value = _books.value + book
+
+                }
+                .onFailure {
+                    _error.value = it.message
+                }
+
+        }
+    }
+
 }

@@ -54,6 +54,16 @@ fun BookCard(
                 text = "ISBN: ${book.isbn}",
                 style = MaterialTheme.typography.bodySmall
             )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Toplam: ${book.totalCopies}",
+                style = MaterialTheme.typography.bodySmall
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Müsait: ${book.availableCopies}",
+                style = MaterialTheme.typography.bodySmall
+            )
 
             Spacer(modifier = Modifier.width(8.dp))
             Row{
