@@ -1,13 +1,16 @@
 package com.turkcell.libraryapp.ui.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.turkcell.libraryapp.data.repository.AuthRepository
+import com.turkcell.libraryapp.data.repository.BookRepository
+import com.turkcell.libraryapp.data.repository.BorrowRepository
+import com.turkcell.libraryapp.ui.factory.BorrowViewModelFactory
+import com.turkcell.libraryapp.ui.screen.BookBorrowScreen
 import com.turkcell.libraryapp.ui.screen.HomeScreen
 import com.turkcell.libraryapp.ui.screen.LoginScreen
 import com.turkcell.libraryapp.ui.screen.RegisterScreen
@@ -15,13 +18,25 @@ import com.turkcell.libraryapp.ui.screen.SplashScreen
 
 import com.turkcell.libraryapp.ui.viewmodel.AuthViewModel
 import com.turkcell.libraryapp.ui.viewmodel.BookViewModel
+import com.turkcell.libraryapp.ui.viewmodel.BorrowViewModel
 
 @Composable
 fun NavGraph(navController: NavHostController = rememberNavController()) {
 
+    val authRepository = AuthRepository()
+    val bookRepository = BookRepository()
+    val borrowRepository = BorrowRepository()
+
     val authViewModel: AuthViewModel = viewModel()
     val bookViewModel: BookViewModel = viewModel()
-    NavHost(navController = navController, startDestination = Screen.Login.route){
+    val borrowViewModel: BorrowViewModel = viewModel(
+        factory = BorrowViewModelFactory(
+            borrowRepository,
+            bookRepository,
+            authRepository
+        )
+    )
+    NavHost(navController = navController, startDestination = Screen.BookBorrowScreen.route){
 
         composable (Screen.Splash.route) { SplashScreen(authViewModel,
             onAuthenticated = {
@@ -63,6 +78,10 @@ fun NavGraph(navController: NavHostController = rememberNavController()) {
         composable(Screen.Homepage.route) {
             HomeScreen(authViewModel, bookViewModel)
         }
+
+        composable(Screen.BookBorrowScreen.route) { BookBorrowScreen(
+            borrowViewModel = borrowViewModel
+        ) }
 
     }
 
