@@ -10,6 +10,8 @@ import kotlinx.coroutines.delay
 import kotlin.random.Random
 
 class AuthRepository{
+
+
     suspend fun signIn(email: String, password: String): Result<Unit> = runCatching {
         supabase.auth.signInWith(Email){
             this.email = email

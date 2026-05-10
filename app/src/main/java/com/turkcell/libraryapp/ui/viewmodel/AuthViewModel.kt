@@ -69,6 +69,11 @@ class AuthViewModel: ViewModel() {
         }
     }
 
+    fun debugSession() {
+        println("SESSION = ${supabase.auth.currentSessionOrNull()}")
+        println("USER = ${supabase.auth.currentUserOrNull()}")
+    }
+
     fun signIn(email: String, password: String){
         viewModelScope.launch {
             _authState.value = AuthState.Loading

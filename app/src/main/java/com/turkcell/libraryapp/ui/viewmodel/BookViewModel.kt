@@ -45,6 +45,7 @@ class BookViewModel: ViewModel() {
             repository.deleteBook(id)
                 .onSuccess {
                     _books.value = _books.value.filter { it.id != id }
+                    loadBooks()
 
                 }
                 .onFailure {
@@ -80,6 +81,7 @@ class BookViewModel: ViewModel() {
             repository.addBook(book)
                 .onSuccess {
                     _books.value = _books.value + book
+                    loadBooks()
 
                 }
                 .onFailure {

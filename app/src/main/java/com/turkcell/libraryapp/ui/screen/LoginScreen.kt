@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.turkcell.libraryapp.ui.viewmodel.AuthState
 import com.turkcell.libraryapp.ui.viewmodel.AuthViewModel
-//kayıt ol sayfası için de aynısını yap
+
 @Composable
 fun LoginScreen(onNavigateToRegister: () -> Unit,
                 onLoginSuccess: (role: String) -> Unit,
@@ -47,6 +47,8 @@ fun LoginScreen(onNavigateToRegister: () -> Unit,
             onLoginSuccess((authState as AuthState.Success).role)
         }
     }
+
+
 
     Column(
         modifier = Modifier.fillMaxSize().padding(24.dp),
@@ -86,6 +88,7 @@ fun LoginScreen(onNavigateToRegister: () -> Unit,
         else{
             Button(onClick = {
                 authViewModel.signIn(email, password)
+                authViewModel.debugSession()
             }, modifier = Modifier.fillMaxWidth()){
                 Text("Giriş Yap")
             }
@@ -96,11 +99,6 @@ fun LoginScreen(onNavigateToRegister: () -> Unit,
         }) {
             Text("Hesabınız yok mu? Kayoıt Ol")
         }
-        if(authState is AuthState.Success){
-            Text("Giriş Yapıldı")
-        }
-        else if(authState is AuthState.Error){
-            Text((authState as AuthState.Error).message)
+
         }
     }
-}

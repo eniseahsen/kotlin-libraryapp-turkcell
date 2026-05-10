@@ -83,7 +83,6 @@ fun AddBookDialog(
         confirmButton = {
             Button(onClick = {
                 val book = Book(
-                    id = "",
                     title = title,
                     author = author,
                     category = category,

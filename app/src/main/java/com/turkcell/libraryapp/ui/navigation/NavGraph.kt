@@ -11,6 +11,8 @@ import com.turkcell.libraryapp.data.repository.BookRepository
 import com.turkcell.libraryapp.data.repository.BorrowRepository
 import com.turkcell.libraryapp.ui.factory.BorrowViewModelFactory
 import com.turkcell.libraryapp.ui.screen.BookBorrowScreen
+import com.turkcell.libraryapp.ui.screen.BorrowedBookScreen
+import com.turkcell.libraryapp.ui.screen.BookManagementSystem
 import com.turkcell.libraryapp.ui.screen.HomeScreen
 import com.turkcell.libraryapp.ui.screen.LoginScreen
 import com.turkcell.libraryapp.ui.screen.RegisterScreen
@@ -36,7 +38,7 @@ fun NavGraph(navController: NavHostController = rememberNavController()) {
             authRepository
         )
     )
-    NavHost(navController = navController, startDestination = Screen.BookBorrowScreen.route){
+    NavHost(navController = navController, startDestination = Screen.Login.route){
 
         composable (Screen.Splash.route) { SplashScreen(authViewModel,
             onAuthenticated = {
@@ -75,13 +77,40 @@ fun NavGraph(navController: NavHostController = rememberNavController()) {
             },
             authViewModel = authViewModel
         ) }
-        composable(Screen.Homepage.route) {
-            HomeScreen(authViewModel, bookViewModel)
-        }
+
 
         composable(Screen.BookBorrowScreen.route) { BookBorrowScreen(
+            bookViewModel = bookViewModel,
             borrowViewModel = borrowViewModel
         ) }
+
+        composable(Screen.BorrowedBooksScreen.route){
+            BorrowedBookScreen(
+                borrowViewModel = borrowViewModel
+            )
+        }
+
+        composable(Screen.BookManagementSystem.route){
+            BookManagementSystem(
+                authViewModel = authViewModel,
+                bookViewModel = bookViewModel
+            )
+        }
+
+        composable(Screen.Homepage.route){
+            HomeScreen(
+                onNavigateToManagement = {
+                    navController.navigate(Screen.BookManagementSystem.route)
+                },
+                onNavigateToBorrow = {
+                    navController.navigate(Screen.BookBorrowScreen.route)
+                },
+                onNavigateToBorrowedBooks =  {
+                    navController.navigate(Screen.BorrowedBooksScreen.route)
+                }
+
+            )
+        }
 
     }
 
