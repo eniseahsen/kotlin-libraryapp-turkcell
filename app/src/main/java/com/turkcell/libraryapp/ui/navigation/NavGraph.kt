@@ -86,7 +86,8 @@ fun NavGraph(navController: NavHostController = rememberNavController()) {
 
         composable(Screen.BorrowedBooksScreen.route){
             BorrowedBookScreen(
-                borrowViewModel = borrowViewModel
+                borrowViewModel = borrowViewModel,
+                onNavigateBack = { navController.popBackStack()}
             )
         }
 

@@ -59,9 +59,11 @@ fun BookBorrowScreen(bookViewModel: BookViewModel,
                         isBorrowedByUser = borrowedBookIds.contains(book.id),
                         onBorrowClick = {
                             borrowViewModel.borrowBook(book)
+                            bookViewModel.loadBooks()
                         },
                         onReturnClick = {
                             borrowViewModel.returnBook(book)
+                            bookViewModel.loadBooks()
                         }
                     )
 

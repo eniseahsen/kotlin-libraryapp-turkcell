@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +22,8 @@ import com.turkcell.libraryapp.ui.viewmodel.BorrowViewModel
 
 @Composable
 fun BorrowedBookScreen(
-    borrowViewModel: BorrowViewModel
+    borrowViewModel: BorrowViewModel,
+    onNavigateBack: () -> Unit
 ){
     val books by borrowViewModel.books.collectAsState()
     val isLoading by borrowViewModel.isLoading.collectAsState()
@@ -48,13 +50,12 @@ fun BorrowedBookScreen(
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ){
-                    items(books, key = { it.book.id ?: ""}) { item ->
+                    itemsIndexed(books) { index, item ->
                         BorrowedBookCard(
                             item = item,
                             onReturnClick = {
                                 borrowViewModel.returnBook(it)
                             }
-
                         )
                     }
                 }

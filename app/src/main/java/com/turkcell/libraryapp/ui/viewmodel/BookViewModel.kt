@@ -82,7 +82,6 @@ class BookViewModel: ViewModel() {
                 .onSuccess {
                     _books.value = _books.value + book
                     loadBooks()
-
                 }
                 .onFailure {
                     _error.value = it.message

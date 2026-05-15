@@ -3,9 +3,8 @@ package com.turkcell.libraryapp.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.turkcell.libraryapp.data.model.Book
-import com.turkcell.libraryapp.data.model.BookUiModel
 import com.turkcell.libraryapp.data.model.BorrowRecord
-import com.turkcell.libraryapp.data.model.BorrowedBookUiModel
+import com.turkcell.libraryapp.ui.model.BorrowedBookUiModel
 import com.turkcell.libraryapp.data.repository.AuthRepository
 import com.turkcell.libraryapp.data.repository.BookRepository
 import com.turkcell.libraryapp.data.repository.BorrowRepository
@@ -18,7 +17,7 @@ class BorrowViewModel(
     private val bookRepository: BookRepository,
     private val authRepository: AuthRepository
 ): ViewModel() {
-    private val _books = MutableStateFlow<List< BorrowedBookUiModel>>(emptyList())
+    private val _books = MutableStateFlow<List<BorrowedBookUiModel>>(emptyList())
     val books: StateFlow<List<BorrowedBookUiModel>> = _books
 
 
@@ -45,6 +44,8 @@ class BorrowViewModel(
                 )
             )
 
+            _borrowedBookIds.value = _borrowedBookIds.value + bookId
+
 
             loadBorrowedBooks()
 
@@ -60,7 +61,12 @@ class BorrowViewModel(
             val bookId = book.id ?: return@launch
 
 
+
+
             borrowRepository.returnBook(bookId, userId)
+            bookRepository.updateBook(
+                book.copy(availableCopies = book.availableCopies - 1)
+            )
 
 
             loadBorrowedBooks()

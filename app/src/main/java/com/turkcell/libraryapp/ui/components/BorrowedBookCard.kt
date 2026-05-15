@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.turkcell.libraryapp.data.model.Book
-import com.turkcell.libraryapp.data.model.BorrowedBookUiModel
+import com.turkcell.libraryapp.ui.model.BorrowedBookUiModel
 
 @Composable
 fun BorrowedBookCard(
