@@ -9,7 +9,7 @@ Uygulama **Jetpack Compose, MVVM mimarisi ve Supabase backend** kullanılarak ge
 - MVVM Architecture
 - Kotlin Coroutines
 StateFlow
-- Supabase (Auth + PostgREST)
+- Supabase 
 - Navigation Compose
 
 ## Mimari Yapı
